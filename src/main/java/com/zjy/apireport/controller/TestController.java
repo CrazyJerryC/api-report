@@ -11,5 +11,6 @@ public class TestController {
         return "success";
     }
 
+    //write an api for test db connection
 
 }

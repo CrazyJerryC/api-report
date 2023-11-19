@@ -1,5 +1,6 @@
 package com.zjy.apireport.controller;
 
+import com.zjy.apireport.dto.UniqueValuesDTO;
 import com.zjy.apireport.entity.ApiDetail;
 import com.zjy.apireport.service.ApiDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,23 @@ public class ApiDetailController {
         return apiDetailService.getApiDetailById(id);
     }
 
+//    @GetMapping("/report")
+//    public Map<String, Long> generateReport(@RequestParam String appName) {
+//        return apiDetailService.generateReportBySourceApp(appName);
+//    }
+
+    @GetMapping("/unique-values")
+    public UniqueValuesDTO getUniqueValues() {
+        return apiDetailService.getUniqueValues();
+    }
+
     @GetMapping("/report")
-    public Map<String, Long> generateReport(@RequestParam String appName) {
-        return apiDetailService.generateReportBySourceApp(appName);
+    public Map<String, Long> generateReport(
+            @RequestParam String appName,
+            @RequestParam String environment,
+            @RequestParam String csi
+    ) {
+        return apiDetailService.generateReportBySourceApp(appName, environment, csi);
     }
 
     // 其他RESTful接口方法

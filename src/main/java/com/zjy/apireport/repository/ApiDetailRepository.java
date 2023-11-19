@@ -9,6 +9,14 @@ import java.util.List;
 @Repository
 public interface ApiDetailRepository extends JpaRepository<ApiDetail, Long> {
     List<ApiDetail> findByAppName(String appName);
-    // 这里可以定义额外的查询方法，Spring Data JPA 会自动实现
+
+    List<ApiDetail> findByAppNameAndEnvironmentAndCSI(String appName, String environment, String csi);
+
+    List<String> findDistinctAppNames();
+
+    List<String> findDistinctEnvironments();
+
+    List<String> findDistinctCSI();
+
 }
 

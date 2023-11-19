@@ -3,53 +3,68 @@
 <head>
     <title>Report</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        input[type="text"] {
-            padding: 8px;
-            font-size: 14px;
-        }
-
-        button {
-            padding: 8px 16px;
-            font-size: 14px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        #charts {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-
-        canvas {
-            max-width: 400px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 <body>
-<input type="text" id="appNameInput" placeholder="Enter appName">
-<button onclick="generateReport()">Generate Report</button>
+<div>
+    <label for="appName">App Name:</label>
+    <select id="appName">
+        <!-- appName 下拉单选框选项将在页面加载完成后通过 JavaScript 动态添加 -->
+    </select>
 
-<div id="charts">
+    <label for="environment">Environment:</label>
+    <select id="environment">
+        <!-- environment 下拉单选框选项将在页面加载完成后通过 JavaScript 动态添加 -->
+    </select>
+
+    <label for="csi">CSI:</label>
+    <select id="csi">
+        <!-- csi 下拉单选框选项将在页面加载完成后通过 JavaScript 动态添加 -->
+    </select>
+
+    <label for="timeRange">Time Range:</label>
+    <select id="timeRange">
+        <option value="5">5 Minutes</option>
+        <option value="10">10 Minutes</option>
+        <option value="20">20 Minutes</option>
+    </select>
+
+
+    <button onclick="generateReport()">Generate Report</button>
+</div>
+
+<div>
     <canvas id="pieChart"></canvas>
     <canvas id="barChart"></canvas>
 </div>
 
 <script>
+    // 获取唯一值并填充下拉单选框选项
+    fetch(`/unique-values`)
+        .then(response => response.json())
+        .then(data => {
+            populateDropdown("appName", data.appNames);
+            populateDropdown("environment", data.environments);
+            populateDropdown("csi", data.csiList);
+        });
+
+    // 填充下拉单选框选项的函数
+    function populateDropdown(selectId, values) {
+        var select = document.getElementById(selectId);
+        values.forEach(value => {
+            var option = document.createElement("option");
+            option.value = value;
+            option.textContent = value;
+            select.appendChild(option);
+        });
+    }
+
     function generateReport() {
-        var appName = document.getElementById("appNameInput").value;
-        fetch(`/report?appName=${appName}`)
+        var appName = document.getElementById("appName").value;
+        var environment = document.getElementById("environment").value;
+        var csi = document.getElementById("csi").value;
+        var timeRange = document.getElementById("timeRange").value;
+
+        fetch(`/report?appName=${appName}&environment=${environment}&csi=${csi}&timeRange=${timeRange}`)
             .then(response => response.json())
             .then(data => {
                 generatePieChart(data);

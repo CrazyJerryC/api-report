@@ -1,5 +1,6 @@
 package com.zjy.apireport.service;
 
+import com.zjy.apireport.dto.UniqueValuesDTO;
 import com.zjy.apireport.entity.ApiDetail;
 import com.zjy.apireport.repository.ApiDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,16 @@ public class ApiDetailService {
         return opt;
     }
 
-    public Map<String, Long> generateReportBySourceApp(String appName) {
-        List<ApiDetail> apiDetails = apiDetailRepository.findByAppName(appName);
+    public UniqueValuesDTO getUniqueValues() {
+        List<String> appNames = apiDetailRepository.findDistinctAppNames();
+        List<String> environments = apiDetailRepository.findDistinctEnvironments();
+        List<String> csiList = apiDetailRepository.findDistinctCSI();
+
+        return new UniqueValuesDTO(appNames, environments, csiList);
+    }
+
+    public Map<String, Long> generateReportBySourceApp(String appName, String environment, String csi) {
+        List<ApiDetail> apiDetails = apiDetailRepository.findByAppNameAndEnvironmentAndCSI(appName, environment, csi);
 
         // 统计每个 SourceApp 的数量
         Map<String, Long> countsBySourceApp = apiDetails.stream()

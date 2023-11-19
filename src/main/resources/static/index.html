@@ -3,23 +3,54 @@
 <head>
     <title>Report</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        div {
+            margin-bottom: 10px;
+        }
+
+        label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        canvas {
+            display: block;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
 <div>
     <label for="appName">App Name:</label>
-    <select id="appName">
-        <!-- appName 下拉单选框选项将在页面加载完成后通过 JavaScript 动态添加 -->
-    </select>
+    <select id="appName"></select>
 
     <label for="environment">Environment:</label>
-    <select id="environment">
-        <!-- environment 下拉单选框选项将在页面加载完成后通过 JavaScript 动态添加 -->
-    </select>
+    <select id="environment"></select>
 
     <label for="csi">CSI:</label>
-    <select id="csi">
-        <!-- csi 下拉单选框选项将在页面加载完成后通过 JavaScript 动态添加 -->
-    </select>
+    <select id="csi"></select>
 
     <label for="timeRange">Time Range:</label>
     <select id="timeRange">
@@ -28,13 +59,12 @@
         <option value="20">20 Minutes</option>
     </select>
 
-
     <button onclick="generateReport()">Generate Report</button>
 </div>
 
 <div>
-    <canvas id="pieChart"></canvas>
-    <canvas id="barChart"></canvas>
+    <canvas id="pieChart" width="400" height="300"></canvas>
+    <canvas id="barChart" width="400" height="300"></canvas>
 </div>
 
 <script>

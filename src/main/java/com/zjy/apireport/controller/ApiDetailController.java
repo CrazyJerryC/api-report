@@ -1,5 +1,6 @@
 package com.zjy.apireport.controller;
 
+import com.zjy.apireport.dto.MeetingRequest;
 import com.zjy.apireport.dto.UniqueValuesDTO;
 import com.zjy.apireport.entity.ApiDetail;
 import com.zjy.apireport.service.ApiDetailService;
@@ -43,6 +44,11 @@ public class ApiDetailController {
             @RequestParam String csi
     ) {
         return apiDetailService.generateReportBySourceApp(appName, environment, csi);
+    }
+
+    @PostMapping("/meeting")
+    public void sendMeeting(@RequestParam MeetingRequest meetingRequest){
+        System.out.println(meetingRequest);
     }
 
     // 其他RESTful接口方法

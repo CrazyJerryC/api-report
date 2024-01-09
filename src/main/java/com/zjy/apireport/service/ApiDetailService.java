@@ -4,7 +4,9 @@ import com.zjy.apireport.dto.UniqueValuesDTO;
 import com.zjy.apireport.entity.ApiDetail;
 import com.zjy.apireport.repository.ApiDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,6 +17,14 @@ public class ApiDetailService {
 
     @Autowired
     private ApiDetailRepository apiDetailRepository;
+
+    @Value("${email.address}")
+    private String email;
+
+    public String printVal(){
+        System.out.println(email);
+        return email;
+    }
 
     public List<ApiDetail> getAllApiDetails() {
         return apiDetailRepository.findAll();
@@ -42,6 +52,7 @@ public class ApiDetailService {
 
         return countsBySourceApp;
     }
+
 
     // 其他可能需要的业务逻辑方法
     // ...
